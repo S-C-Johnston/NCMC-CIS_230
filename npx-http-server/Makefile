@@ -1,8 +1,8 @@
 podman-run: podman
-	podman run --volume ./public:/public --publish=8080 --detach localhost/http-server:latest
+	podman run --volume ./public:/public --publish 8080:8080 --detach localhost/http-server:latest
 
 docker-run: docker
-	docker run --volume ./public:/public --publish=8080 --detach localhost/http-server:latest
+	docker run --volume ./public:/public --publish 8080:8080 --detach localhost/http-server:latest
 
 podman-stop:
 	podman stop $$(podman ps | awk '/http-server/ {print $$NF}');
