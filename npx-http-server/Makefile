@@ -1,29 +1,26 @@
-podman: podman-localhost-http-server.done
+CONTAINERIZER ?= podman
+IMAGE_TAG ?= localhost/http-server:latest
+
+ifeq ($(CONTAINERIZER), docker)
+        CONTAINERFILE ?= Dockerfile
+else
+        CONTAINERFILE ?= Containerfile
+endif
+
+build: localhost-http-server.done $(CONTAINERFILE)
 
 hello-world: public/index.html
 	pandoc -thtml public/index.md -o public/index.html
 
-podman-localhost-http-server.done: Containerfile
-	podman build -t localhost/http-server:latest .
-	touch podman-localhost-http-server.done
+localhost-http-server.done: $(CONTAINERFILE)
+	$(CONTAINERIZER) build -t $(IMAGE_TAG) .
+	touch $@
 
-podman-run: podman
-	podman run --volume ./public:/public --publish 8080:8080 --detach localhost/http-server:latest
+run: build
+	$(CONTAINERIZER) run --volume ./public:/public --publish 8080:8080 --detach $(IMAGE_TAG)
 
-podman-stop:
-	podman stop $$(podman ps | awk '/http-server/ {print $$NF}');
+stop:
+	$(CONTAINERIZER) stop $$($(CONTAINERIZER) ps | awk '/http-server/ {print $$NF}');
 
-dockerfile:
+Dockerfile: Containerfile
 	cp Containerfile Dockerfile
-
-docker: docker-localhost-http-server.done dockerfile
-
-docker-run: docker
-	docker run --volume ./public:/public --publish 8080:8080 --detach localhost/http-server:latest
-
-docker-stop:
-	docker stop $$(docker ps | awk '/http-server/ {print $$NF}');
-
-docker-localhost-http-server.done: dockerfile
-	docker build -t localhost/http-server:latest .
-	touch docker-localhost-http-server.done
