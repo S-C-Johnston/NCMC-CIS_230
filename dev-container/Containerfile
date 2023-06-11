@@ -1,0 +1,5 @@
+FROM docker.io/library/node:latest
+WORKDIR /home/node/react-pwa-app
+RUN ["npx", "-y", "create-react-app", "./", "--template", "cra-template-pwa-typescript"]
+RUN ["npm", "install", "--save", "bootstrap", "sass"]
+ENTRYPOINT ["/usr/bin/env", "bash"]
