@@ -36,10 +36,11 @@ export class Weight {
     }
 
     set weight_unit(weight_unit: WEIGHT_UNITS) {
+        this.my_quantity = this.in_units(weight_unit);
         this.my_weight_unit = weight_unit;
     }
 
-    in_units(weight_unit: WEIGHT_UNITS): number {
+    public in_units(weight_unit: WEIGHT_UNITS): number {
         let weight_in_units: number;
         if (weight_unit === this.my_weight_unit) {
             weight_in_units = this.my_quantity;
@@ -51,6 +52,6 @@ export class Weight {
         }
 
         return weight_in_units;
-    }
+    };
 
 }
