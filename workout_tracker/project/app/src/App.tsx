@@ -7,7 +7,15 @@ import { WEIGHT_UNITS, Weight } from './Weight';
 
 function App() {
 
-  let example_workout = new Weight_workout(5, 5, {quantity: 25, weight_unit: WEIGHT_UNITS.Kilograms} as Weight, "Arnold Press");
+  let example_workout = new Weight_workout({
+    sets: 5,
+    repetitions: 5,
+    weight: {
+      quantity: 25,
+      weight_unit: WEIGHT_UNITS.Kilograms
+    } as Weight,
+    exercise_name: "Arnold Press"
+  });
 
   return (
     <div className="App">
