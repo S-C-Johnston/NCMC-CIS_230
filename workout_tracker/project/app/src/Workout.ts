@@ -81,7 +81,7 @@ export class Weight_workout implements Workout {
     }
 
     private update_total_weight(): Weight {
-        this.my_total_weight.weight_unit = this.my_weight.weight_unit;
+        this.my_total_weight.weight_unit = this.weight_unit as WEIGHT_UNITS;
         this.my_total_weight.quantity = (
             this.my_weight.in_units(this.my_total_weight.weight_unit)
             * this.my_sets
