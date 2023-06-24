@@ -12,11 +12,15 @@ export class Weight {
     private my_quantity: number;
 
     constructor(
-        quantity?: number,
-        weight_unit?: WEIGHT_UNITS
+        quantity: number = 0,
+        weight_unit: WEIGHT_UNITS = WEIGHT_UNITS.Kilograms
     ) {
-        this.my_quantity = quantity ??= 0;
-        this.my_weight_unit = weight_unit ??= WEIGHT_UNITS.Kilograms;
+        this.my_quantity = quantity;
+        this.my_weight_unit = weight_unit;
+    }
+
+    static from_Weight(obj: Weight): Weight{
+        return new Weight(obj?.quantity, obj?.weight_unit)
     }
 
     get weight(): Weight {
