@@ -4,16 +4,6 @@ import { Weight_workout } from "./Workout";
 export function Weight_workout_Form(
     { current_workout: _current_workout }: { current_workout?: Weight_workout; } = {}) {
 
-    function _current_workout_prop_if_defined(property: string): any {
-        const EMPTY_STRING = "";
-        if (_current_workout && (property in _current_workout)) {
-            return _current_workout[property as keyof typeof _current_workout]
-        }
-        else {
-            return EMPTY_STRING
-        }
-    }
-
     return (
         <section>
             <form action="">
@@ -23,7 +13,7 @@ export function Weight_workout_Form(
                         type="number"
                         name="sets"
                         id="sets"
-                        defaultValue={_current_workout_prop_if_defined("sets")}
+                        defaultValue={_current_workout?.sets}
                     ></input>
                 </div>
                 <div>
@@ -32,7 +22,7 @@ export function Weight_workout_Form(
                         type="number"
                         name="repetitions"
                         id="repetitions"
-                        defaultValue={_current_workout_prop_if_defined("repetitions")}
+                        defaultValue={_current_workout?.repetitions}
                     ></input>
                 </div>
                 <div>
@@ -41,7 +31,7 @@ export function Weight_workout_Form(
                         type="number"
                         name="weight_quantity"
                         id="weight_quantity"
-                        defaultValue={_current_workout_prop_if_defined("weight_quantity")}
+                        defaultValue={_current_workout?.weight_quantity}
                     ></input>
                 </div>
                 <div>
