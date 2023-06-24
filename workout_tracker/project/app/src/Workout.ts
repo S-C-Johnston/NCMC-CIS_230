@@ -73,12 +73,10 @@ export class Weight_workout implements Workout {
     }
 
     get weight(): Weight {
-        this.update_total_weight();
         return this.my_weight;
     }
 
     get total_weight(): Weight {
-        this.update_total_weight()
         return  this.my_total_weight;
     }
 
