@@ -13,25 +13,26 @@ export class Weight_workout implements Workout {
     private my_weight: Weight;
     private my_total_weight: Weight;
 
-    constructor(
-        sets: number,
-        repetitions: number,
-        weight: Weight,
-        exercise_name: string,
-        id?: Date
+    constructor({
+        sets = 0,
+        repetitions = 0,
+        weight = new Weight(),
+        exercise_name = "",
+        id = new Date()
+    }: Partial<Weight_workout> = {}
     ) {
         this.my_sets = sets;
         this.my_repetitions = repetitions;
-        this.my_weight = weight;
+        this.my_weight = Weight.from_Weight(weight)
 
         this.my_total_weight = new Weight(
-            (weight.quantity
+            (this.my_weight.quantity
                 * this.my_sets
                 * this.my_repetitions),
-            weight.weight_unit
+            this.my_weight.weight_unit
         );
 
-        this.exercise_name = exercise_name;
+        this.exercise_name = exercise_name ?? "";
         this.id = id ? id : new Date();
     }
 
