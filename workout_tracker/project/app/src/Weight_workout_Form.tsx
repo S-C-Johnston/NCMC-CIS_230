@@ -48,41 +48,57 @@ export function Weight_workout_Form(
         <section>
             <form action="">
                 <div>
-                    <label htmlFor="sets">Sets: </label>
+                    <label
+                        htmlFor="sets"
+                        className="form-label"
+                    >Sets: </label>
                     <input
-                        type="number"
                         name="sets"
                         id="sets"
+                        className="form-control"
+                        type="number"
                         value={_current_workout?.sets ?? 0}
                         onChange={(e) => update_sets(e)}
                     ></input>
                 </div>
                 <div>
-                    <label htmlFor="repetitions">Repetitions: </label>
+                    <label
+                        htmlFor="repetitions"
+                        className="form-label"
+                    >Repetitions: </label>
                     <input
-                        type="number"
                         name="repetitions"
                         id="repetitions"
+                        className="form-control"
+                        type="number"
                         value={_current_workout?.repetitions ?? 0}
                         onChange={(e) => update_repetitions(e)}
                     ></input>
                 </div>
                 <div>
-                    <label htmlFor="weight_quantity">Weight: </label>
+                    <label
+                        htmlFor="weight_quantity"
+                        className="form-label"
+                    >Weight: </label>
                     <input
-                        type="number"
-                        step="0.1"
                         name="weight_quantity"
                         id="weight_quantity"
+                        className="form-control"
+                        type="number"
+                        step="0.1"
                         value={_current_workout?.weight_quantity ?? 0}
                         onChange={(e) => update_weight_quantity(e)}
                     ></input>
                 </div>
                 <div>
-                    <label htmlFor="weight_unit">Unit: </label>
+                    <label
+                        htmlFor="weight_unit"
+                        className="form-label"
+                    >Unit: </label>
                     <select
                         name="weight_unit"
                         id="weight_unit"
+                        className="form-select"
                         defaultValue={_current_workout?.weight_unit ?? WEIGHT_UNITS.Kilograms}
                         onChange={(e) => update_weight_unit(e)}
                     >
