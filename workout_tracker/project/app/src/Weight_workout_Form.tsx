@@ -79,7 +79,7 @@ export function Weight_workout_Form(
                     ></input>
                 </div>
                 <div>
-                    <label htmlFor="weight_unit">Unit:</label>
+                    <label htmlFor="weight_unit">Unit: </label>
                     <select
                         name="weight_unit"
                         id="weight_unit"
