@@ -1,8 +1,11 @@
-import { WEIGHT_UNITS } from "./Weight";
+import { useState } from "react";
+import { WEIGHT_UNITS, Weight } from "./Weight";
 import { Weight_workout } from "./Workout";
 
 export function Weight_workout_Form(
-    { current_workout: _current_workout }: { current_workout?: Weight_workout; } = {}) {
+    { current_workout = new Weight_workout() }: { current_workout?: Weight_workout; } = {}
+) {
+    const [_current_workout, set_current_workout] = useState(new Weight_workout(current_workout));
 
     return (
         <section>
