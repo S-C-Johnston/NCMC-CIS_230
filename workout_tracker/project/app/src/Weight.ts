@@ -3,9 +3,11 @@ export enum WEIGHT_UNITS {
     Kilograms = "KG"
 }
 enum WEIGHT_CONVERSION {
-    KG_TO_LB = 2.204623,
-    LB_TO_KG = 0.4535924
+    KG_TO_LB = 2.204623, /* KG:LB 2.204523*/
+    LB_TO_KG = 0.4535924 /* LB:KG 0.4535924 */
 }
+
+const FIXED_POINT_DECIMAL_PLACES: number = 2; //For any display wonkiness with JS numbers, use number.toFixed(fixed_point);
 
 export class Weight {
     private my_weight_unit: WEIGHT_UNITS;
@@ -51,8 +53,13 @@ export class Weight {
         }
         else {
             let unit_conversion: string = `${this.my_weight_unit}_TO_${weight_unit}`;
-            weight_in_units = (this.my_quantity * WEIGHT_CONVERSION[unit_conversion as keyof typeof WEIGHT_CONVERSION]);
+            weight_in_units = Number((this.my_quantity *
+                WEIGHT_CONVERSION[unit_conversion as keyof typeof WEIGHT_CONVERSION])
+                .toFixed(FIXED_POINT_DECIMAL_PLACES));
             // https://stackoverflow.com/a/41970976/20141003
+            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toPrecision
+            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toFixed
+            // This is for a workout tracker; nobody should even care about precision on the dumbells that they're lifting more than 0.01
         }
 
         return weight_in_units;
