@@ -8,6 +8,13 @@ export function Weight_workout_Form(
     const [_current_workout, set_current_workout] = useState(new Weight_workout(current_workout));
     const FIXED_POINT_DECIMAL_PLACES: number = 2; //For any display wonkiness with JS numbers, use number.toFixed(fixed_point);
 
+    function update_exercise_name(e: React.ChangeEvent<HTMLInputElement>) {
+        return set_current_workout(previous => {
+            previous.exercise_name = e.target.value;
+            return new Weight_workout(previous)
+        });
+    };
+
     function update_sets(e: React.ChangeEvent<HTMLInputElement>) {
         return set_current_workout(previous => {
             previous.sets = e.target.value as unknown as number;
@@ -47,6 +54,22 @@ export function Weight_workout_Form(
     return (
         <section>
             <form action="">
+                <div>
+                    <label
+                        htmlFor="exercise_name"
+                        className="form-label"
+                    >
+                        <input
+                            name="exercise_name"
+                            id="exercise_name"
+                            className="form-control"
+                            type="text"
+                            value={_current_workout?.exercise_name}
+                            placeholder="exercise name"
+                            onChange={e => update_exercise_name(e)}
+                        />
+                    </label>
+                </div>
                 <div>
                     <label
                         htmlFor="sets"
