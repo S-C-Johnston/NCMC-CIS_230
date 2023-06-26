@@ -1,117 +1,62 @@
-import { useState } from "react";
+/* eslint-disable react/jsx-pascal-case */
+import { useReducer, useState } from "react";
 import { WEIGHT_UNITS, Weight } from "./Weight";
-import { Weight_workout } from "./Workout";
+import { Weight_workout, Weight_workout_reducer } from "./Workout";
+import { Weight_workout_Form_inputs } from "./Weight_workout_Form/inputs";
 
 export function Weight_workout_Form(
     { current_workout = new Weight_workout() }: { current_workout?: Weight_workout; } = {}
 ) {
-    const [_current_workout, set_current_workout] = useState(new Weight_workout(current_workout));
+    const [_current_workout, dispatch] = useReducer(Weight_workout_reducer, current_workout);
     const FIXED_POINT_DECIMAL_PLACES: number = 2; //For any display wonkiness with JS numbers, use number.toFixed(fixed_point);
-
-    function update_exercise_name(e: React.ChangeEvent<HTMLInputElement>) {
-        return set_current_workout(previous => {
-            previous.exercise_name = e.target.value;
-            return new Weight_workout(previous)
-        });
-    };
-
-    function update_sets(e: React.ChangeEvent<HTMLInputElement>) {
-        return set_current_workout(previous => {
-            previous.sets = e.target.value as unknown as number;
-            return new Weight_workout(previous);
-        });
-    };
-
-    function update_repetitions(e: React.ChangeEvent<HTMLInputElement>) {
-        return set_current_workout(previous => {
-            previous.repetitions = e.target.value as unknown as number;
-            return new Weight_workout(previous);
-        });
-    };
-
-    function update_weight_quantity(e: React.ChangeEvent<HTMLInputElement>) {
-        return set_current_workout(previous => {
-            previous.weight_quantity = e.target.value as unknown as number;
-            return new Weight_workout(previous);
-        });
-    };
-
-    function update_weight_unit(e: React.ChangeEvent<HTMLSelectElement>) {
-        return set_current_workout(previous => {
-            previous.weight_unit = e.target.value as WEIGHT_UNITS;
-            // The whole `as keyof typeof enum` trick is not
-            // necessary here, and it doesn't work anyway.
-            // keyof typeof is useful when the
-            // programmatically accessed .index is the value
-            // you're selecting. Here, the value is pulling
-            // from the Enum's values, so it'll just index
-            // off those fine. It's bizarre, I'm trying not
-            // to cross my eyes too hard about it.
-            return new Weight_workout(previous);
-        });
-    };
 
     return (
         <section>
             <form action="">
                 <div>
-                    <label
-                        htmlFor="exercise_name"
-                        className="form-label"
-                    >
-                        <input
-                            name="exercise_name"
-                            id="exercise_name"
-                            className="form-control"
-                            type="text"
-                            value={_current_workout?.exercise_name}
-                            placeholder="exercise name"
-                            onChange={e => update_exercise_name(e)}
-                        />
-                    </label>
+                    <Weight_workout_Form_inputs
+                    name_and_id="exercise_name"
+                    type="text"
+                    label=""
+                    weight_workout_obj_field={_current_workout?.exercise_name}
+                    onchange_dispatch={dispatch}
+                    dispatch_type="exercise_name"
+                    default_value="exercise name"
+                    />
                 </div>
                 <div>
-                    <label
-                        htmlFor="sets"
-                        className="form-label"
-                    >Sets: </label>
-                    <input
-                        name="sets"
-                        id="sets"
-                        className="form-control"
-                        type="number"
-                        value={_current_workout?.sets ?? 0}
-                        onChange={(e) => update_sets(e)}
-                    ></input>
+                    <Weight_workout_Form_inputs
+                    name_and_id="sets"
+                    type="number"
+                    label="Sets: "
+                    weight_workout_obj_field={_current_workout?.sets}
+                    onchange_dispatch={dispatch}
+                    dispatch_type="sets"
+                    default_value={0}
+                    />
                 </div>
                 <div>
-                    <label
-                        htmlFor="repetitions"
-                        className="form-label"
-                    >Repetitions: </label>
-                    <input
-                        name="repetitions"
-                        id="repetitions"
-                        className="form-control"
-                        type="number"
-                        value={_current_workout?.repetitions ?? 0}
-                        onChange={(e) => update_repetitions(e)}
-                    ></input>
+                    <Weight_workout_Form_inputs
+                    name_and_id="repetitions"
+                    type="number"
+                    label="Repetitions: "
+                    weight_workout_obj_field={_current_workout?.repetitions}
+                    onchange_dispatch={dispatch}
+                    dispatch_type="repetitions"
+                    default_value={0}
+                    />
                 </div>
                 <div>
-                    <label
-                        htmlFor="weight_quantity"
-                        className="form-label"
-                    >Weight: </label>
-                    <input
-                        name="weight_quantity"
-                        id="weight_quantity"
-                        className="form-control"
-                        type="number"
-                        step="0.1"
-                        value={_current_workout?.weight_quantity ?? 0}
-                        onChange={(e) => update_weight_quantity(e)}
-                    ></input>
+                    <Weight_workout_Form_inputs
+                    name_and_id="weight_quantity"
+                    type="number"
+                    label="Weight: "
+                    weight_workout_obj_field={_current_workout?.weight_quantity}
+                    onchange_dispatch={dispatch}
+                    dispatch_type="weight_quantity"
+                    default_value={0}
+                    options={{step: 0.1}}
+                    />
                 </div>
                 <div>
                     <label
@@ -122,8 +67,8 @@ export function Weight_workout_Form(
                         name="weight_unit"
                         id="weight_unit"
                         className="form-select"
-                        defaultValue={_current_workout?.weight_unit ?? WEIGHT_UNITS.Kilograms}
-                        onChange={(e) => update_weight_unit(e)}
+                        value={_current_workout?.weight_unit ?? WEIGHT_UNITS.Kilograms}
+                        onChange={(e) => dispatch({ type: "weight_unit", value: e.target.value as WEIGHT_UNITS })}
                     >
                         {
                             Object.values(WEIGHT_UNITS).map((current_unit) => (
