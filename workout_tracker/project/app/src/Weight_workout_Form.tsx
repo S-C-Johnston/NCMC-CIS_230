@@ -15,47 +15,47 @@ export function Weight_workout_Form(
             <form action="">
                 <div>
                     <Weight_workout_Form_inputs
-                    name_and_id="exercise_name"
-                    type="text"
-                    label=""
-                    weight_workout_obj_field={_current_workout?.exercise_name}
-                    onchange_dispatch={dispatch}
-                    dispatch_type="exercise_name"
-                    default_value="exercise name"
+                        name_and_id="exercise_name"
+                        type="text"
+                        label=""
+                        weight_workout_obj_field={_current_workout?.exercise_name}
+                        onchange_dispatch={dispatch}
+                        dispatch_type="exercise_name"
+                        default_value="exercise name"
                     />
                 </div>
                 <div>
                     <Weight_workout_Form_inputs
-                    name_and_id="sets"
-                    type="number"
-                    label="Sets: "
-                    weight_workout_obj_field={_current_workout?.sets}
-                    onchange_dispatch={dispatch}
-                    dispatch_type="sets"
-                    default_value={0}
+                        name_and_id="sets"
+                        type="number"
+                        label="Sets: "
+                        weight_workout_obj_field={_current_workout?.sets}
+                        onchange_dispatch={dispatch}
+                        dispatch_type="sets"
+                        default_value={0}
                     />
                 </div>
                 <div>
                     <Weight_workout_Form_inputs
-                    name_and_id="repetitions"
-                    type="number"
-                    label="Repetitions: "
-                    weight_workout_obj_field={_current_workout?.repetitions}
-                    onchange_dispatch={dispatch}
-                    dispatch_type="repetitions"
-                    default_value={0}
+                        name_and_id="repetitions"
+                        type="number"
+                        label="Repetitions: "
+                        weight_workout_obj_field={_current_workout?.repetitions}
+                        onchange_dispatch={dispatch}
+                        dispatch_type="repetitions"
+                        default_value={0}
                     />
                 </div>
                 <div>
                     <Weight_workout_Form_inputs
-                    name_and_id="weight_quantity"
-                    type="number"
-                    label="Weight: "
-                    weight_workout_obj_field={_current_workout?.weight_quantity}
-                    onchange_dispatch={dispatch}
-                    dispatch_type="weight_quantity"
-                    default_value={0}
-                    options={{step: 0.1}}
+                        name_and_id="weight_quantity"
+                        type="number"
+                        label="Weight: "
+                        weight_workout_obj_field={_current_workout?.weight_quantity}
+                        onchange_dispatch={dispatch}
+                        dispatch_type="weight_quantity"
+                        default_value={0}
+                        options={{ step: 0.1 }}
                     />
                 </div>
                 <div>
