@@ -22,10 +22,13 @@ export function Weight_workout_Form_inputs({
 ) {
     return (
         <>
-            <label
-                htmlFor={name_and_id}
-                className="form-label"
-            >{label ?? ""}</label>
+            {label ?
+                <label
+                    htmlFor={name_and_id}
+                    className="form-label"
+                >{label}</label>
+                : null
+            }
             <input
                 name={name_and_id}
                 id={name_and_id}
