@@ -1,18 +1,39 @@
 /* eslint-disable react/jsx-pascal-case */
-import { useReducer } from "react";
-import { WEIGHT_UNITS } from "./Weight";
+import { FormEvent, useReducer } from "react";
+import { WEIGHT_UNITS, Weight } from "./Weight";
 import { Weight_workout, Weight_workout_reducer } from "./Workout";
 import { Weight_workout_Form_inputs } from "./Weight_workout_Form/inputs";
+import * as idb from "idb";
+import { workout_db_schema } from "./Workout_Database";
 
-export function Weight_workout_Form(
-    { current_workout = new Weight_workout() }: { current_workout?: Weight_workout; } = {}
+export function Weight_workout_Form({
+    current_workout = new Weight_workout(),
+    database_handle
+ }: {
+    current_workout?: Weight_workout;
+    database_handle:  idb.IDBPDatabase<workout_db_schema>
+},
 ) {
-    const [_current_workout, dispatch] = useReducer(Weight_workout_reducer, current_workout);
+    let [_current_workout, dispatch] = useReducer(Weight_workout_reducer, current_workout);
     const FIXED_POINT_DECIMAL_PLACES: number = 2; //For any display wonkiness with JS numbers, use number.toFixed(fixed_point);
+
+    console.log('from Weight_workout_Form, database_handle is: ', database_handle);
+
+    async function handle_submit(
+        event: FormEvent,
+        input_workout: Weight_workout,
+    ) {
+        const tx = database_handle.transaction('workouts_store', 'readwrite');
+        console.log('from handle_submit, input_workout is: ', input_workout);
+        await tx.store.put(input_workout);
+        await tx.done;
+    };
 
     return (
         <section>
-            <form action="">
+            <form
+                onSubmit={e => handle_submit(e, _current_workout)}
+            >
                 <div>
                     <Weight_workout_Form_inputs
                         name_and_id="exercise_name"
@@ -82,6 +103,11 @@ export function Weight_workout_Form(
                         Total weight: {Number(_current_workout.total_weight.quantity.toFixed(FIXED_POINT_DECIMAL_PLACES))} {_current_workout.total_weight.weight_unit}
                     </p>
                 </div>
+                <button
+                    className="btn btn-primary"
+                    type="submit"
+                    disabled={!_current_workout.exercise_name}
+                >Submit</button>
             </form>
         </section>
     )

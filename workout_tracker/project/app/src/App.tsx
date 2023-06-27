@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-pascal-case */
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './App.css';
 import { Weight_workout_Form } from './Weight_workout_Form';
 import { initialize_Workout_Database, workout_db_schema } from './Workout_Database';
@@ -7,11 +7,13 @@ import { IDBPDatabase } from "idb"
 
 function App() {
   const workout_db = useRef<IDBPDatabase<workout_db_schema> | null>(null);
+  const [database_attached, set_database_attached] = useState(false);
 
-  useEffect( () => {
+  useEffect(() => {
     (async () => {
-    workout_db.current = await initialize_Workout_Database()
+      workout_db.current = await initialize_Workout_Database()
       // .then(promise => { return promise })
+      return set_database_attached(true)
     })()
   }, [])
 
@@ -27,7 +29,10 @@ function App() {
 
   return (
     <div className="App">
-      <Weight_workout_Form />
+      {database_attached ?
+        <Weight_workout_Form database_handle={(workout_db.current) as IDBPDatabase<workout_db_schema>} />
+        : <p>Loading database...</p>
+      }
     </div>
   );
 }
