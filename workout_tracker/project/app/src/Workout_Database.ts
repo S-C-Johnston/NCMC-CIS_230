@@ -22,8 +22,17 @@ export async function initialize_Workout_Database(
     db_name: string = DEFAULT_DATABASE_NAME,
     db_store_name: string = DEFAULT_OBJECT_STORE_NAME
 ) {
-    const workout_database = await openDB<workout_db_schema>(db_name, DATABASE_VERSION,
-    );
+    const workout_database = await openDB<workout_db_schema>(db_name, DATABASE_VERSION, {
+        upgrade(database, oldVersion, newVersion, transaction, event) {
+            const store = database.createObjectStore(
+                "workouts_store",
+                {
+                    keyPath: nameof<Weight_workout>("id")
+                }
+            );
+            store.createIndex(INDEX_STRING, INDEX_STRING);
+        },
+    });
 
     return workout_database;
 }
