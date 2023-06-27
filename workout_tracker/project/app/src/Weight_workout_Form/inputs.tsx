@@ -1,5 +1,4 @@
-import { Weight } from "../Weight"
-import { Weight_workout, Weight_workout_update_action } from "../Workout"
+import { Weight_workout_update_action } from "../Workout"
 
 export function Weight_workout_Form_inputs({
     name_and_id,

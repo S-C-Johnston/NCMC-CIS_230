@@ -1,7 +1,6 @@
 import { openDB, DBSchema } from "idb";
 import { nameof } from "./nameof";
 import { Weight_workout } from "./Workout";
-import { Weight } from "./Weight";
 
 const DATABASE_VERSION = 1;
 const DEFAULT_DATABASE_NAME = "workouts_database";

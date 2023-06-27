@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-pascal-case */
-import { useReducer, useState } from "react";
-import { WEIGHT_UNITS, Weight } from "./Weight";
+import { useReducer } from "react";
+import { WEIGHT_UNITS } from "./Weight";
 import { Weight_workout, Weight_workout_reducer } from "./Workout";
 import { Weight_workout_Form_inputs } from "./Weight_workout_Form/inputs";
 
