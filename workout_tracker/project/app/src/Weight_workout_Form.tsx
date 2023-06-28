@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-pascal-case */
-import { FormEvent, useReducer } from "react";
+import { FormEvent, useCallback, useReducer } from "react";
 import { WEIGHT_UNITS, Weight } from "./Weight";
 import { Weight_workout, Weight_workout_reducer } from "./Workout";
 import { Weight_workout_Form_inputs } from "./Weight_workout_Form/inputs";
@@ -24,15 +24,18 @@ export function Weight_workout_Form({
 
     console.log('from Weight_workout_Form, database_handle is: ', database_handle);
 
-    async function handle_submit(
-        event: FormEvent,
-        input_workout: Weight_workout,
-    ) {
-        const tx = database_handle.transaction('workouts_store', 'readwrite');
-        console.log('from handle_submit, input_workout is: ', input_workout);
-        await tx.store.put(input_workout);
-        await tx.done;
-    };
+    const handle_submit = useCallback(
+        async (
+            e: FormEvent,
+            input_workout: Weight_workout,
+        ) => {
+            const tx = database_handle.transaction('workouts_store', 'readwrite');
+            console.log('from handle_submit, input_workout is: ', input_workout);
+            await tx.store.put(input_workout);
+            await tx.done;
+        },
+        [database_handle]
+    );
 
     return (
         <section>
