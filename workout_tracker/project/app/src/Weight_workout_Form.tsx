@@ -6,8 +6,13 @@ import { Weight_workout_Form_inputs } from "./Weight_workout_Form/inputs";
 import * as idb from "idb";
 import { workout_db_schema } from "./Workout_Database";
 
+const MIN_INPUT_NUMBER = 1;
+
 export function Weight_workout_Form({
-    current_workout = new Weight_workout(),
+    current_workout = new Weight_workout({
+        sets: MIN_INPUT_NUMBER,
+        repetitions: MIN_INPUT_NUMBER
+    }),
     database_handle
  }: {
     current_workout?: Weight_workout;
@@ -53,7 +58,8 @@ export function Weight_workout_Form({
                         weight_workout_obj_field={_current_workout?.sets}
                         onchange_dispatch={dispatch}
                         dispatch_type="sets"
-                        default_value={0}
+                        default_value={MIN_INPUT_NUMBER}
+                        options={{ min: MIN_INPUT_NUMBER }}
                     />
                 </div>
                 <div>
@@ -64,7 +70,8 @@ export function Weight_workout_Form({
                         weight_workout_obj_field={_current_workout?.repetitions}
                         onchange_dispatch={dispatch}
                         dispatch_type="repetitions"
-                        default_value={0}
+                        default_value={MIN_INPUT_NUMBER}
+                        options={{ min: MIN_INPUT_NUMBER }}
                     />
                 </div>
                 <div>
@@ -76,7 +83,10 @@ export function Weight_workout_Form({
                         onchange_dispatch={dispatch}
                         dispatch_type="weight_quantity"
                         default_value={0}
-                        options={{ step: 0.1 }}
+                        options={{
+                            step: 0.1,
+                            min: 0.1
+                        }}
                     />
                 </div>
                 <div>
