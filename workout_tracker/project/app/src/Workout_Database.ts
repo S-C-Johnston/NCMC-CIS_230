@@ -4,8 +4,11 @@ import { Weight_workout } from "./Workout";
 
 const DATABASE_VERSION = 1;
 const DEFAULT_DATABASE_NAME = "workouts_database";
-const INDEX_STRING = nameof<Weight_workout>("exercise_name");
 const DEFAULT_OBJECT_STORE_NAME = "weight_workouts_store";
+export const WORKOUT_DB_INDICES = [
+    nameof<Weight_workout>("exercise_name"),
+    nameof<Weight_workout>("date")
+];
 
 export interface workout_db_schema extends DBSchema {
     weight_workouts_store: {
@@ -29,7 +32,9 @@ export async function initialize_Workout_Database(
                     keyPath: nameof<Weight_workout>("id")
                 }
             );
-            store.createIndex(INDEX_STRING, INDEX_STRING);
+
+            store.createIndex(WORKOUT_DB_INDICES[0], WORKOUT_DB_INDICES[0]);
+            store.createIndex(WORKOUT_DB_INDICES[1], WORKOUT_DB_INDICES[1], { unique: false });
         },
     });
 
