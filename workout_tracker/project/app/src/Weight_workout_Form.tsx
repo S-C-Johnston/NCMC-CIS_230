@@ -16,7 +16,7 @@ export function Weight_workout_Form({
     database_handle
  }: {
     current_workout?: Weight_workout;
-    database_handle:  idb.IDBPDatabase<workout_db_schema>
+    database_handle: idb.IDBPDatabase<workout_db_schema>
 },
 ) {
     let [_current_workout, dispatch] = useReducer(Weight_workout_reducer, current_workout);
@@ -29,7 +29,7 @@ export function Weight_workout_Form({
             e: FormEvent,
             input_workout: Weight_workout,
         ) => {
-            const tx = database_handle.transaction('workouts_store', 'readwrite');
+            const tx = database_handle.transaction('weight_workouts_store', 'readwrite');
             console.log('from handle_submit, input_workout is: ', input_workout);
             await tx.store.put(input_workout);
             await tx.done;
