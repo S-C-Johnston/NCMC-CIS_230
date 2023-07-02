@@ -1,7 +1,8 @@
 import { Weight, WEIGHT_UNITS } from "./Weight";
 
 interface Workout {
-    readonly id: Date;
+    readonly id: string;
+    readonly date: Date;
     exercise_name: string;
 }
 
@@ -71,21 +72,25 @@ export function Weight_workout_reducer(
 }
 
 export class Weight_workout implements Workout {
-    readonly id: Date;
+    readonly date: Date;
+    readonly id: string
     private my_sets: number;
     private my_repetitions: number;
     exercise_name: string;
     private my_weight: Weight;
     private my_total_weight: Weight;
 
+
     constructor({
+        id = crypto.randomUUID(),
         sets = 0,
         repetitions = 0,
         weight = new Weight(),
         exercise_name = "",
-        id = new Date()
+        date = new Date(),
     }: Partial<Weight_workout> = {}
     ) {
+        this.id = id;
         this.my_sets = sets;
         this.my_repetitions = repetitions;
         this.my_weight = Weight.from_Weight(weight)
@@ -98,8 +103,8 @@ export class Weight_workout implements Workout {
         );
 
         this.exercise_name = exercise_name ?? "";
-        this.id = id ? id : new Date();
-    }
+        this.date = date ? date : new Date();
+    };
 
     get sets(): number {
         return this.my_sets;
