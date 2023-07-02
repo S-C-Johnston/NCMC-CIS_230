@@ -106,6 +106,17 @@ export class Weight_workout implements Workout {
         this.date = date ? date : new Date();
     };
 
+    static from_dead_Weight_workout(input_workout: Weight_workout): Weight_workout {
+        return new Weight_workout({
+            id: input_workout.id,
+            sets: input_workout.my_sets,
+            repetitions: input_workout.my_repetitions,
+            weight: Weight.from_Weight(input_workout.my_weight),
+            exercise_name: input_workout.exercise_name,
+            date: input_workout.date
+        })
+    };
+
     get sets(): number {
         return this.my_sets;
     }
