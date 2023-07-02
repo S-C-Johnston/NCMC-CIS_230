@@ -22,8 +22,14 @@ export class Weight {
     }
 
     static from_Weight(obj: Weight): Weight{
-        return new Weight(obj?.quantity, obj?.weight_unit)
-    }
+        const quantity = (obj?.quantity ?? obj.my_quantity ?? 0);
+        const weight_unit: WEIGHT_UNITS = (obj?.weight_unit ?? obj.my_weight_unit ?? WEIGHT_UNITS.Kilograms);
+        return new Weight(quantity, weight_unit);
+    };
+
+    static from_dead_Weight(input_Weight: Weight): Weight {
+        return new Weight(input_Weight.my_quantity, input_Weight.my_weight_unit)
+    };
 
     get weight(): Weight {
         return this;
