@@ -1,9 +1,10 @@
 /* eslint-disable react/jsx-pascal-case */
-import { useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import './App.css';
 import { Weight_workout_Form } from './Weight_workout_Form';
 import { initialize_Workout_Database, workout_db_schema } from './Workout_Database';
 import { IDBPDatabase } from "idb"
+import { Weight_workout_List } from './Weight_workout_List';
 
 function App() {
   const workout_db = useRef<IDBPDatabase<workout_db_schema> | null>(null);
@@ -30,7 +31,10 @@ function App() {
   return (
     <div className="App">
       {database_attached ?
-        <Weight_workout_Form database_handle={(workout_db.current) as IDBPDatabase<workout_db_schema>} />
+        <>
+          <Weight_workout_Form database_handle={(workout_db.current) as IDBPDatabase<workout_db_schema>} />
+          <Weight_workout_List database_handle={(workout_db.current) as IDBPDatabase<workout_db_schema>} />
+        </>
         : <p>Loading database...</p>
       }
     </div>
