@@ -4,12 +4,12 @@ import { Weight_workout } from "./Workout";
 
 const DATABASE_VERSION = 1;
 const DEFAULT_DATABASE_NAME = "workouts_database";
-const DEFAULT_OBJECT_STORE_NAME = "workouts_store";
 const INDEX_STRING = nameof<Weight_workout>("exercise_name");
+const DEFAULT_OBJECT_STORE_NAME = "weight_workouts_store";
 
 export interface workout_db_schema extends DBSchema {
-    workouts_store: {
-        key: Date;
+    weight_workouts_store: {
+        key: string;
         value: Weight_workout;
         indexes: any;
         //Opting out of type-checking on this one. Can't set indexes
@@ -24,7 +24,7 @@ export async function initialize_Workout_Database(
     const workout_database = await openDB<workout_db_schema>(db_name, DATABASE_VERSION, {
         upgrade(database, oldVersion, newVersion, transaction, event) {
             const store = database.createObjectStore(
-                "workouts_store",
+                "weight_workouts_store",
                 {
                     keyPath: nameof<Weight_workout>("id")
                 }
