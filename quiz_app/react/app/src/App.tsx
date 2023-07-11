@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-pascal-case */
 import React, { ChangeEvent, useCallback, useState } from 'react';
 import './App.css';
-import { Quiz } from "./quiz/quiz_data";
+import { Quiz, score_Quiz } from "./quiz/quiz_data";
 import general_knowledge from "./general_knowledge_quiz.json";
 import { Quiz_Question_Form } from './quiz/Quiz_Question_Form';
 
@@ -9,6 +9,14 @@ function App() {
 
   let my_quiz: Quiz = general_knowledge;
   console.log(`loaded Quiz: ${Object.values(my_quiz)}`);
+
+  const [is_scored, set_is_scored] = useState(false);
+  const [final_score, set_final_score] = useState<string>();
+  const handle_score_click = useCallback(() => {
+    set_final_score(score_Quiz(my_quiz, selected_answers));
+    set_is_scored(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const [selected_answers, select_answer] = useState<Map<string, number>>(new Map());
   const handle_radio_click = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -29,6 +37,8 @@ function App() {
           key={question.question}
         />
       ))}
+      <button type="button" onClick={handle_score_click}>SCORE!</button>
+      <p>Score: {is_scored ? final_score : "?"}</p>
     </>
   );
 };
