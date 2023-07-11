@@ -1,7 +1,9 @@
+/* eslint-disable react/jsx-pascal-case */
 import React from 'react';
 import './App.css';
 import { Quiz } from "./quiz/quiz_data";
 import general_knowledge from "./general_knowledge_quiz.json";
+import { Quiz_Question_Form } from './quiz/Quiz_Question_Form';
 
 function App() {
 
@@ -10,30 +12,9 @@ function App() {
 
   return (
     <>
-    <ul>
         {my_quiz.questions.map(question => (
-          <li key={crypto.randomUUID()}>
-            {question.question}
-            <form action="">
-              <fieldset>
-                {question.answers.map(answer => (
-                  <>
-                    <input
-                      type="radio"
-                      name={question.question}
-                      id={question.answers.indexOf(answer).toString()}
-                      value={question.answers.indexOf(answer).toString()}
-                    />
-                    <label htmlFor={question.answers.indexOf(answer).toString()}>
-                      {answer}</label>
-                  </>
-                ))}
-              </fieldset>
-            </form>
-            {question.correct_answer_index}
-          </li>
+          <Quiz_Question_Form question={question} key={question.question}/>
         ))}
-    </ul>
     </>
   );
 }
