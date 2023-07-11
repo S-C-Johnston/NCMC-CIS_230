@@ -34,6 +34,7 @@ function App() {
         <Quiz_Question_Form
           question={question}
           radio_callback={handle_radio_click}
+          is_scored={is_scored}
           key={question.question}
         />
       ))}
