@@ -5,6 +5,10 @@ export function Quiz_Question_Form(
     { question }:
         { question: Quiz_Question }
 ) {
+    const [selected_answer, select_answer] = useState<String>();
+    const handle_radio_click = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+        select_answer(e.target.value);
+    }, []);
 
     return (
         <>
@@ -18,6 +22,7 @@ export function Quiz_Question_Form(
                                 name={question.question}
                                 id={question.answers.indexOf(answer).toString()}
                                 value={question.answers.indexOf(answer).toString()}
+                                onChange={e => handle_radio_click(e)}
                             />
                             <label htmlFor={question.answers.indexOf(answer).toString()}>
                                 {answer}
@@ -26,6 +31,7 @@ export function Quiz_Question_Form(
                     ))}
                 </fieldset>
             </form>
+            <p>Selected answer: {selected_answer}</p>
         </>
     )
 }
