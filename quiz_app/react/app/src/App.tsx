@@ -41,6 +41,7 @@ function App() {
         />
       ))}
         <button
+          className="Score-button"
           type="button"
           onClick={handle_score_click}
           disabled={is_scored}
