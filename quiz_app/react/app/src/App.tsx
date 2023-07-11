@@ -17,7 +17,7 @@ function App() {
         selected_answers.set(e.target.name, Number(e.target.value))
     );
     console.log(selected_answers);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

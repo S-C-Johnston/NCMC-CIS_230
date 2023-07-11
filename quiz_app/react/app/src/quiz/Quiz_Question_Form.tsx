@@ -41,4 +41,4 @@ export function Quiz_Question_Form(
             </form>
         </>
     )
-}
+};
