@@ -1,4 +1,4 @@
-interface Quiz_Question {
+export interface Quiz_Question {
     question: string;
     answers: string[];
     correct_answer_index: number;
