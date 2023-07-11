@@ -1,6 +1,10 @@
 import { ChangeEvent } from "react";
 import { Quiz_Question } from "./quiz_data";
 
+function get_answer_id (question: Quiz_Question, answer: string) {
+    return `${question.question}${question.answers.indexOf(answer).toString()}`
+};
+
 export function Quiz_Question_Form(
     {
         question,
@@ -22,11 +26,13 @@ export function Quiz_Question_Form(
                             <input
                                 type="radio"
                                 name={question.question}
-                                id={question.answers.indexOf(answer).toString()}
+                                id={get_answer_id(question, answer)}
                                 value={question.answers.indexOf(answer).toString()}
                                 onChange={e => radio_callback(e)}
                             />
-                            <label htmlFor={question.answers.indexOf(answer).toString()}>
+                            <label
+                                htmlFor={get_answer_id(question, answer)}
+                            >
                                 {answer}
                             </label>
                         </div>
