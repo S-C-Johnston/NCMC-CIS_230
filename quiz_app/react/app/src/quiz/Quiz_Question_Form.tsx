@@ -1,14 +1,16 @@
-import { ChangeEvent, useCallback, useState } from "react";
+import { ChangeEvent } from "react";
 import { Quiz_Question } from "./quiz_data";
 
 export function Quiz_Question_Form(
-    { question }:
-        { question: Quiz_Question }
+    {
+        question,
+        radio_callback,
+    }:
+        {
+            question: Quiz_Question;
+            radio_callback: (e: ChangeEvent<HTMLInputElement>) => void;
+        }
 ) {
-    const [selected_answer, select_answer] = useState<String>();
-    const handle_radio_click = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-        select_answer(e.target.value);
-    }, []);
 
     return (
         <>
@@ -22,7 +24,7 @@ export function Quiz_Question_Form(
                                 name={question.question}
                                 id={question.answers.indexOf(answer).toString()}
                                 value={question.answers.indexOf(answer).toString()}
-                                onChange={e => handle_radio_click(e)}
+                                onChange={e => radio_callback(e)}
                             />
                             <label htmlFor={question.answers.indexOf(answer).toString()}>
                                 {answer}
@@ -31,7 +33,6 @@ export function Quiz_Question_Form(
                     ))}
                 </fieldset>
             </form>
-            <p>Selected answer: {selected_answer}</p>
         </>
     )
 }

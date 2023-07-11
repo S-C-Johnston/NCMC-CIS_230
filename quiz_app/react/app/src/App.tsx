@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-pascal-case */
-import React from 'react';
+import React, { ChangeEvent, useCallback, useState } from 'react';
 import './App.css';
 import { Quiz } from "./quiz/quiz_data";
 import general_knowledge from "./general_knowledge_quiz.json";
@@ -10,11 +10,25 @@ function App() {
   let my_quiz: Quiz = general_knowledge;
   console.log(`loaded Quiz: ${Object.values(my_quiz)}`);
 
+  const [selected_answers, select_answer] = useState<Map<string, number>>(new Map());
+  const handle_radio_click = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    select_answer(
+      selected_answers =>
+        selected_answers.set(e.target.name, Number(e.target.value))
+    );
+    console.log(selected_answers);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
-        {my_quiz.questions.map(question => (
-          <Quiz_Question_Form question={question} key={question.question}/>
-        ))}
+      {my_quiz.questions.map(question => (
+        <Quiz_Question_Form
+          question={question}
+          radio_callback={handle_radio_click}
+          key={question.question}
+        />
+      ))}
     </>
   );
 }
