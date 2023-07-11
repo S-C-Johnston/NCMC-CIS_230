@@ -30,6 +30,8 @@ function App() {
 
   return (
     <>
+    <h1 className="App">{my_quiz.name}</h1>
+    <h2 className="App">{my_quiz.topic}</h2>
       {my_quiz.questions.map(question => (
         <Quiz_Question_Form
           question={question}
@@ -38,8 +40,14 @@ function App() {
           key={question.question}
         />
       ))}
-      <button type="button" onClick={handle_score_click}>SCORE!</button>
-      <p>Score: {is_scored ? final_score : "?"}</p>
+      <button
+        type="button"
+        onClick={handle_score_click}
+        disabled={is_scored}
+      >
+        SCORE!
+      </button>
+      <h3 className="App">Score: {is_scored ? final_score : "?"}</h3>
     </>
   );
 };
