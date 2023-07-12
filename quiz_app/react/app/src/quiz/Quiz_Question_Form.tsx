@@ -1,3 +1,4 @@
+import "./Quiz_Question_Form.css"
 import { ChangeEvent } from "react";
 import { Quiz_Question } from "./quiz_data";
 
