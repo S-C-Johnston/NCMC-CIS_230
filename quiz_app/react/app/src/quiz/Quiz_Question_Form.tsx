@@ -51,5 +51,5 @@ export function Quiz_Question_Form(
                 </fieldset>
             </form>
         </>
-    )
+    );
 };
