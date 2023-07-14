@@ -1,5 +1,12 @@
 const NUMERIC_FIXED_DECIMAL_PLACES = 2;
 
+export interface Quiz_score {
+    quiz_name: string;
+    topic: string;
+    Date: Date;
+    percentage_correct: string;
+};
+
 export interface Quiz_Question {
     question: string;
     answers: string[];
