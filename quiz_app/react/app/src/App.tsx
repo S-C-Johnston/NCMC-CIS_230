@@ -6,6 +6,7 @@ import general_knowledge from "./general_knowledge_quiz.json";
 import { Quiz_Question_Form } from './quiz/Quiz_Question_Form';
 import * as IDB from "idb"; // because I'm lazy
 import { initialize_Quiz_score_db, quiz_score_db_schema } from './database/score_tracking_database';
+import Quiz_score_history_list from './stats/Quiz_score_history_list';
 
 function App() {
     let my_quiz: Quiz = general_knowledge;
@@ -101,6 +102,10 @@ function App() {
                 SCORE!
             </button>
             <h3 className="App">Score: {is_scored ? final_score : "?"}</h3>
+            {database_attached
+                ? <Quiz_score_history_list database_handle={quiz_scores_db_handle.current!} />
+                : "Database loading..."
+            }
         </section>
     );
 };
