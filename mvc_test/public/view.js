@@ -15,4 +15,9 @@ export default class View {
         count_paragraph.textContent = `Count is ${this.count}`;
         this.root.appendChild(count_paragraph);
     }
+
+    update() {
+        const count_paragraph_handle = document.querySelector("p");
+        count_paragraph_handle.textContent = `Count is ${this.count}`;
+    }
 }

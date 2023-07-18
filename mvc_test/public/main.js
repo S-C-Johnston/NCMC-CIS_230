@@ -4,15 +4,19 @@ export default function main() {
     const _view = new View();
     _view.render();
 
-    for (let i = 0; i < 30; i++) {
-        setTimeout(
-            () => {
-                _view.count += 1;
-                console.log(`Count is now ${_view.count}`);
-            },
-            1000
-        );
-    };
+    let [i, max] = [0, 10]
+    let timer = setInterval(
+        () => {
+            _view.count += 1;
+            _view.update();
+            console.log(`Count is now ${_view.count}`);
+            i++;
+            if (i >= max) {
+                clearInterval(timer);
+            }
+        },
+        500
+    );
 }
 
 main();
