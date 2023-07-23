@@ -3,6 +3,7 @@ import { CUSTOM_EVENTS } from "./types.js";
 
 const HEADING_NAME_ID = "quiz_name"
 const HEADING_TOPIC_ID = "quiz_topic"
+const STYLESHEET = "./quiz/Quiz_Question_Form.css"
 
 function get_answer_id (question: Quiz_Question, answer: string) {
     return `${question.question}${question.answers.indexOf(answer).toString()}`
@@ -20,6 +21,7 @@ export default class View {
 
     render(state = this.state, root = this.root) {
         root.appendChild(this.build_form(state));
+        this.style(root);
     };
 
     build_form(state = this.state) {
@@ -62,6 +64,13 @@ export default class View {
         });
 
         return fragment;
+    };
+
+    style(root = this.root) {
+        const link = document.createElement("link");
+        link.href = STYLESHEET;
+        link.rel = "stylesheet";
+        root.appendChild(link);
     };
 
     update() {
