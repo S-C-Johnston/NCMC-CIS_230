@@ -1,3 +1,4 @@
+import { model_state } from "./model.js";
 import { Quiz, Quiz_Question, get_answer_id } from "./quiz/quiz_data.js";
 import { CUSTOM_EVENTS } from "./types.js";
 
@@ -7,12 +8,15 @@ const STYLESHEET = "./quiz/Quiz_Question_Form.css"
 
 export default class View {
     root: Element;
-    state: Quiz;
+    state: model_state;
+    update_callback: (event: Event) => any
     constructor(
-        state: Quiz
+        state: model_state,
+        update_callback: (event: Event) => any
     ) {
         this.root = document.querySelector("#root") ?? document.body;
         this.state = state;
+        this.update_callback = update_callback;
     };
 
     render(state = this.state, root = this.root) {
@@ -23,11 +27,11 @@ export default class View {
     build_form(state = this.state) {
         const fragment = document.createDocumentFragment();
         const name = fragment.appendChild(document.createElement("h1"));
-        name.textContent = state.name;
+        name.textContent = state.quiz.name;
         name.id = HEADING_NAME_ID;
 
         const topic = fragment.appendChild(document.createElement("h2"));
-        topic.textContent = state.topic;
+        topic.textContent = state.quiz.topic;
         topic.id = HEADING_TOPIC_ID;
 
         const form = fragment.appendChild(document.createElement("form"));
