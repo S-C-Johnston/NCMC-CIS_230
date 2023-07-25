@@ -15,11 +15,22 @@ export default class main {
         this._view.render();
     };
 
-    update_callback(e: Event){
-        const input = e.target as HTMLInputElement;
-        console.log(`Received event ${e} of type ${e.type}`);
-        console.log(input.name, input.value)
-        this._model.add_selected_answer(input.name, Number(input.value));
+    update_callback(e: Event) {
+        switch (e.type) {
+            case "change": {
+                const input = e.target as HTMLInputElement;
+                console.log(`Received event ${e} of type ${e.type}`);
+                console.log(input.name, input.value)
+                if (input.type === "radio") {
+                    this._view.render(
+                        this._model.add_selected_answer(
+                            input.name, Number(input.value)
+                        )
+                    );
+                };
+                break;
+            };
+        };
     };
 };
 
