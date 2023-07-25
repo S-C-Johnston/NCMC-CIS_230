@@ -5,6 +5,7 @@ import { CUSTOM_EVENTS } from "./types.js";
 const HEADING_NAME_ID = "quiz_name"
 const HEADING_TOPIC_ID = "quiz_topic"
 const STYLESHEET = "./quiz/Quiz_Question_Form.css"
+const CORRECT_ANSWER_HILIGHT_COLOR = "lightgreen"
 
 export default class View {
     root: Element;
@@ -35,14 +36,14 @@ export default class View {
         topic.id = HEADING_TOPIC_ID;
 
         const form = fragment.appendChild(document.createElement("form"));
-        state.questions.map(question => {
-            form.appendChild(this.build_fieldset(question));
+        state.quiz.questions.map((question) => {
+            form.appendChild(this.build_fieldset(question, state.is_scored));
         });
 
         return fragment;
     };
 
-    build_fieldset(question: Quiz_Question) {
+    build_fieldset(question: Quiz_Question, is_scored?: boolean) {
         const fragment = document.createDocumentFragment();
         const fieldset = fragment.appendChild(document.createElement("fieldset"));
         fieldset.id = question.question;
@@ -52,12 +53,19 @@ export default class View {
 
         question.answers.map(answer => {
             const answer_div = fieldset.appendChild(document.createElement("div"));
+            if ((is_scored ?? false)
+                &&
+                question.correct_answer_index === question.answers.indexOf(answer)
+            ) {
+                answer_div.style.backgroundColor = CORRECT_ANSWER_HILIGHT_COLOR;
+            };
 
             const radio = answer_div.appendChild(document.createElement("input"));
             radio.type = "radio";
             radio.name = question.question;
             radio.id = get_answer_id(question, answer);
             radio.value = question.answers.indexOf(answer).toString();
+            radio.disabled = (is_scored ?? false);
 
             const radio_label = answer_div.appendChild(document.createElement("label"));
             radio_label.textContent = answer;
