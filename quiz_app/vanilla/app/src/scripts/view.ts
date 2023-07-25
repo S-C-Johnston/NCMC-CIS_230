@@ -21,7 +21,7 @@ export default class View {
 
     render(state = this.state, root = this.root) {
         root.appendChild(this.build_form(state));
-        this.style(root);
+        this.add_style(root);
     };
 
     build_form(state = this.state) {
@@ -66,7 +66,7 @@ export default class View {
         return fragment;
     };
 
-    style(root = this.root) {
+    add_style(root = this.root) {
         const link = document.createElement("link");
         link.href = STYLESHEET;
         link.rel = "stylesheet";
