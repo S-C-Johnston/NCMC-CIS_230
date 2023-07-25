@@ -35,3 +35,7 @@ export function score_Quiz(
     });
     return (correct_answers / answer_count).toFixed(NUMERIC_FIXED_DECIMAL_PLACES);
 };
+
+export function get_answer_id (question: Quiz_Question, answer: string) {
+    return `${question.question}${question.answers.indexOf(answer).toString()}`
+};

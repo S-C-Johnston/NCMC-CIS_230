@@ -1,13 +1,9 @@
-import { Quiz, Quiz_Question } from "./quiz/quiz_data.js";
+import { Quiz, Quiz_Question, get_answer_id } from "./quiz/quiz_data.js";
 import { CUSTOM_EVENTS } from "./types.js";
 
 const HEADING_NAME_ID = "quiz_name"
 const HEADING_TOPIC_ID = "quiz_topic"
 const STYLESHEET = "./quiz/Quiz_Question_Form.css"
-
-function get_answer_id (question: Quiz_Question, answer: string) {
-    return `${question.question}${question.answers.indexOf(answer).toString()}`
-};
 
 export default class View {
     root: Element;
