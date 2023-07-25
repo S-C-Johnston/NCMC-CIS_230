@@ -68,6 +68,7 @@ export default class View {
             radio.disabled = (is_scored ?? false);
 
             const radio_label = answer_div.appendChild(document.createElement("label"));
+            radio_label.htmlFor = radio.id;
             radio_label.textContent = answer;
         });
 
