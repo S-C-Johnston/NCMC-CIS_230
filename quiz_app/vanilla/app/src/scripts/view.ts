@@ -37,13 +37,28 @@ export default class View {
 
         const form = fragment.appendChild(document.createElement("form"));
         state.quiz.questions.map((question) => {
-            form.appendChild(this.build_fieldset(question, state.is_scored));
+            form.appendChild(this.build_fieldset({
+                question: question,
+                selected_answers: state.selected_answers,
+                is_scored: state.is_scored
+            }));
         });
 
         return fragment;
     };
 
-    build_fieldset(question: Quiz_Question, is_scored?: boolean) {
+    build_fieldset({
+        question,
+        selected_answers,
+        is_scored
+    }: {
+        question: Quiz_Question;
+        selected_answers?: Map<string, number>;
+        is_scored?: boolean;
+    }) {
+        const selected_answer_index = selected_answers?.has(question.question)
+            ?  selected_answers.get(question.question)
+            : null;
         const fragment = document.createDocumentFragment();
         const fieldset = fragment.appendChild(document.createElement("fieldset"));
         fieldset.id = question.question;
@@ -68,6 +83,7 @@ export default class View {
             radio.disabled = (is_scored ?? false);
             // radio.onchange = (e) => this.update_callback(e);
             radio.addEventListener("change", e => this.update_callback(e));
+            radio.checked = (selected_answer_index === question.answers.indexOf(answer));
 
             const radio_label = answer_div.appendChild(document.createElement("label"));
             radio_label.htmlFor = radio.id;
