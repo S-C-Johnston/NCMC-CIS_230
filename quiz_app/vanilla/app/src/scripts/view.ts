@@ -66,6 +66,8 @@ export default class View {
             radio.id = get_answer_id(question, answer);
             radio.value = question.answers.indexOf(answer).toString();
             radio.disabled = (is_scored ?? false);
+            // radio.onchange = (e) => this.update_callback(e);
+            radio.addEventListener("change", e => this.update_callback(e));
 
             const radio_label = answer_div.appendChild(document.createElement("label"));
             radio_label.htmlFor = radio.id;
