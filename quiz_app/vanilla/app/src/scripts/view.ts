@@ -21,7 +21,8 @@ export default class View {
     };
 
     render(state = this.state, root = this.root) {
-        root.appendChild(this.build_form(state));
+        console.log("Building a new element tree!");
+        root.replaceChildren(this.build_form(state));
         this.add_style(root);
     };
 
