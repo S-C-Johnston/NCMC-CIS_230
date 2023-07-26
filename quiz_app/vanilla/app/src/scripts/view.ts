@@ -5,7 +5,10 @@ import generate_css_safe_id from "./util/generate_css_safe_id.js";
 
 const HEADING_NAME_ID = "quiz_name"
 const HEADING_TOPIC_ID = "quiz_topic"
-const STYLESHEET = "./quiz/Quiz_Question_Form.css"
+const STYLESHEETS = [
+    "./quiz/Quiz_Question_Form.css",
+    "./App.css"
+];
 const CORRECT_ANSWER_HILIGHT_COLOR = "lightgreen"
 
 export default class View {
@@ -146,10 +149,12 @@ export default class View {
     };
 
     add_style(root = this.root) {
-        const link = document.createElement("link");
-        link.href = STYLESHEET;
-        link.rel = "stylesheet";
-        root.appendChild(link);
+        STYLESHEETS.forEach(stylesheet => {
+            const link = document.createElement("link");
+            link.href = stylesheet;
+            link.rel = "stylesheet";
+            root.appendChild(link);
+        });
     };
 
     update() {
