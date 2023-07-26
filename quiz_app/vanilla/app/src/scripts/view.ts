@@ -27,6 +27,15 @@ export default class View {
         this.add_style(root);
     };
 
+    curry_fragment_builder_with_id(
+        fn_to_curry: (uuid: string, ...rest: any[]) => DocumentFragment
+    ) {
+        const uuid = generate_css_safe_id(crypto.randomUUID());
+        return function(...args: any[]) {
+            return fn_to_curry(uuid, ...args)
+        };
+    };
+
     build_form(state = this.state) {
         const fragment = document.createDocumentFragment();
         const name = fragment.appendChild(document.createElement("h1"));
