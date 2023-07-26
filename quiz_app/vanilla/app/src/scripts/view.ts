@@ -19,6 +19,7 @@ export default class View {
         this.root = document.querySelector("#root") ?? document.body;
         this.state = state;
         this.update_callback = update_callback;
+        this.build_form = this.curry_fragment_builder_with_id(this._build_form.bind(this));
     };
 
     render(state = this.state, root = this.root) {
@@ -36,7 +37,19 @@ export default class View {
         };
     };
 
-    build_form(state = this.state) {
+    /**
+     * @abstract build_form is a dummy function prototype which exists primarily
+     * to provide typechecking and a public interface to the intended use of the
+     * curried function
+     * @param state
+     * @returns DocumentFragment
+     */
+    build_form(state = this.state): DocumentFragment {
+        return new DocumentFragment();
+    };
+
+    private _build_form(uuid:string, state = this.state) {
+        console.log(`Building new form!`)
         const fragment = document.createDocumentFragment();
         const name = fragment.appendChild(document.createElement("h1"));
         name.textContent = state.quiz.name;
@@ -47,6 +60,8 @@ export default class View {
         topic.id = HEADING_TOPIC_ID;
 
         const form = fragment.appendChild(document.createElement("form"));
+        form.id = uuid;
+
         state.quiz.questions.map((question) => {
             form.appendChild(this.build_fieldset({
                 question: question,
