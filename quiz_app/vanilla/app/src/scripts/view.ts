@@ -19,12 +19,13 @@ export default class View {
         this.root = document.querySelector("#root") ?? document.body;
         this.state = state;
         this.update_callback = update_callback;
+        this.build_form_section = this.curry_fragment_builder_with_id(this._build_form_section.bind(this));
         this.build_form = this.curry_fragment_builder_with_id(this._build_form.bind(this));
     };
 
     render(state = this.state, root = this.root) {
         console.log("Building a new element tree!");
-        root.replaceChildren(this.build_form(state));
+        root.replaceChildren(this.build_form_section(state, [this.build_form(state)]));
         this.add_style(root);
     };
 
@@ -35,6 +36,38 @@ export default class View {
         return function(...args: any[]) {
             return fn_to_curry(uuid, ...args)
         };
+    };
+
+    /**
+     * @abstract build_form_section is a dummy function prototype which exists
+     * primarily to allow typechecking to occur and provide a public interface
+     * representing the intended use of the curried private function.
+     * @param state
+     * @param child_fragments
+     * @returns DocumentFragment
+     */
+    build_form_section(
+        state = this.state,
+        child_fragments?: DocumentFragment[]
+    ): DocumentFragment {
+        return new DocumentFragment()
+    };
+
+    private _build_form_section(uuid: string, state = this.state, child_fragments?: DocumentFragment[]) {
+        const fragment = document.createDocumentFragment();
+        const section = fragment.appendChild(document.createElement("section"));
+        section.id = uuid ? uuid : "";
+        const name = section.appendChild(document.createElement("h1"));
+        name.textContent = state.quiz.name;
+        name.id = HEADING_NAME_ID;
+
+        const topic = section.appendChild(document.createElement("h2"));
+        topic.textContent = state.quiz.topic;
+        topic.id = HEADING_TOPIC_ID;
+
+        child_fragments?.forEach(elem => fragment.appendChild(elem));
+
+        return fragment;
     };
 
     /**
@@ -51,13 +84,6 @@ export default class View {
     private _build_form(uuid:string, state = this.state) {
         console.log(`Building new form!`)
         const fragment = document.createDocumentFragment();
-        const name = fragment.appendChild(document.createElement("h1"));
-        name.textContent = state.quiz.name;
-        name.id = HEADING_NAME_ID;
-
-        const topic = fragment.appendChild(document.createElement("h2"));
-        topic.textContent = state.quiz.topic;
-        topic.id = HEADING_TOPIC_ID;
 
         const form = fragment.appendChild(document.createElement("form"));
         form.id = uuid;
