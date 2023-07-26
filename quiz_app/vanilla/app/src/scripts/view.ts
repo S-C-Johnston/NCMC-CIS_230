@@ -1,6 +1,7 @@
 import { model_state } from "./model.js";
 import { Quiz, Quiz_Question, get_answer_id } from "./quiz/quiz_data.js";
 import { CUSTOM_EVENTS } from "./types.js";
+import generate_css_safe_id from "./util/generate_css_safe_id.js";
 
 const HEADING_NAME_ID = "quiz_name"
 const HEADING_TOPIC_ID = "quiz_topic"
@@ -62,7 +63,7 @@ export default class View {
             : null;
         const fragment = document.createDocumentFragment();
         const fieldset = fragment.appendChild(document.createElement("fieldset"));
-        fieldset.id = question.question;
+        fieldset.id = generate_css_safe_id(question.question);
 
         const legend = fieldset.appendChild(document.createElement("legend"));
         legend.textContent = question.question;
