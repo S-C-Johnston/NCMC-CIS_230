@@ -1,3 +1,5 @@
+import generate_css_safe_id from "../util/generate_css_safe_id.js";
+
 const NUMERIC_FIXED_DECIMAL_PLACES = 2;
 
 export interface Quiz_score {
@@ -37,5 +39,5 @@ export function score_Quiz(
 };
 
 export function get_answer_id (question: Quiz_Question, answer: string) {
-    return `${question.question}${question.answers.indexOf(answer).toString()}`
+    return `${generate_css_safe_id(question.question)}${question.answers.indexOf(answer).toString()}`
 };
