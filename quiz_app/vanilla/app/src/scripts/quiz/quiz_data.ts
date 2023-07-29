@@ -35,7 +35,8 @@ export function score_Quiz(
             correct_answers++;
         };
     });
-    return (correct_answers / answer_count).toFixed(NUMERIC_FIXED_DECIMAL_PLACES);
+    const score = (correct_answers / answer_count).toFixed(NUMERIC_FIXED_DECIMAL_PLACES);
+    return score;
 };
 
 export function get_answer_id (question: Quiz_Question, answer: string) {
