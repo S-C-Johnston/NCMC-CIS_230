@@ -22,11 +22,15 @@ export default class main {
                 console.log(`Received event ${e} of type ${e.type}`);
                 console.log(input.name, input.value)
                 if (input.type === "radio") {
-                    this._view.render(
-                        this._model.add_selected_answer(
-                            input.name, Number(input.value)
-                        )
+                    let newstate = this._model.add_selected_answer(
+                        input.name, Number(input.value)
                     );
+                    // let fieldset_fragment = this._view.build_fieldset({
+                    //     question: newstate.quiz.questions.find(q => q.question === input.name)!,
+                    //     selected_answers: newstate.selected_answers,
+                    //     is_scored: newstate.is_scored,
+                    // });
+                    // input.closest(`#${fieldset_fragment.firstElementChild?.id}`)?.replaceWith(fieldset_fragment);
                 };
                 break;
             };
