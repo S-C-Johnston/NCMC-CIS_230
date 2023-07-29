@@ -24,11 +24,19 @@ export default class View {
         this.update_callback = update_callback;
         this.build_form_section = this.curry_fragment_builder_with_id(this._build_form_section.bind(this));
         this.build_form = this.curry_fragment_builder_with_id(this._build_form.bind(this));
+        this.build_score_history_list = this.curry_fragment_builder_with_id(this._build_score_history_list.bind(this));
     };
 
     render(state = this.state, root = this.root) {
         console.log("Building a new element tree!");
-        root.replaceChildren(this.build_form_section(state, [this.build_form(state)]));
+        root.replaceChildren(
+            this.build_form_section(
+                state,
+                [
+                    this.build_form(state),
+                    this.build_score_history_list(state.score_history)
+                ])
+        );
         this.add_style(root);
     };
 
@@ -143,6 +151,41 @@ export default class View {
             const radio_label = answer_div.appendChild(document.createElement("label"));
             radio_label.htmlFor = radio.id;
             radio_label.textContent = answer;
+        });
+
+        return fragment;
+    };
+
+    /**
+     * @abstract build_score_history_list is a dummy function prototype which exists primarily
+     * to provide typechecking and a public interface to the intended use of the
+     * curried function. It should be reassigned in the constructor.
+     * @param state
+     * @returns DocumentFragment
+     */
+    build_score_history_list(score_history = this.state.score_history): DocumentFragment {
+        return new DocumentFragment();
+    };
+
+    private _build_score_history_list(uuid: string, score_history = this.state.score_history) {
+        const fragment = document.createDocumentFragment();
+        if (!score_history) {
+            return fragment;
+        }
+
+        const ul = fragment.appendChild(document.createElement("ul"));
+        ul.id = uuid;
+        Array.from(score_history.entries()).map(([key, value]) => {
+            let li = ul.appendChild(document.createElement("li"));
+            li.id = generate_css_safe_id(key.toString());
+            li.appendChild(document.createElement("p"))
+                .textContent = `Date: ${value.Date.toString()}`;
+            li.appendChild(document.createElement("p"))
+                .textContent = `Quiz name: ${value.quiz_name}`;
+            li.appendChild(document.createElement("p"))
+                .textContent = `Quiz topic: ${value.topic}`;
+            li.appendChild(document.createElement("p"))
+                .textContent = `Quiz score: ${value.percentage_correct}`;
         });
 
         return fragment;
