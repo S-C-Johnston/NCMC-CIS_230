@@ -22,9 +22,15 @@ export default class View {
         this.root = document.querySelector("#root") ?? document.body;
         this.state = state;
         this.update_callback = update_callback;
-        this.build_form_section = this.curry_fragment_builder_with_id(this._build_form_section.bind(this));
-        this.build_form = this.curry_fragment_builder_with_id(this._build_form.bind(this));
-        this.build_score_history_list = this.curry_fragment_builder_with_id(this._build_score_history_list.bind(this));
+        this.build_form_section = this.curry_fragment_builder_with_id(
+            this._build_form_section.bind(this)
+        );
+        this.build_form = this.curry_fragment_builder_with_id(
+            this._build_form.bind(this)
+        );
+        this.build_score_history_list = this.curry_fragment_builder_with_id(
+            this._build_score_history_list.bind(this)
+        );
     };
 
     render(state = this.state, root = this.root) {
