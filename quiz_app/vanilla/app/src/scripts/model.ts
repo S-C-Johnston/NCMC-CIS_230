@@ -8,6 +8,7 @@ export type model_state = {
     is_scored?: boolean;
     score?: Quiz_score;
     selected_answers?: Map<string, number>;
+    score_history?: Map<number, Quiz_score>
 };
 
 export default class Model {
@@ -30,6 +31,8 @@ export default class Model {
         this.quiz_scores_db_handle_ready
             .then(result => console.log(`Database handle attached! ${result}`))
             .catch(error => console.log(`Some error occurred! ${error}`));
+        this.state.score_history = new Map<number, Quiz_score>(null);
+        this.get_score_history();
     };
 
     add_selected_answer(question: string, answer_index: number) {
@@ -62,6 +65,25 @@ export default class Model {
                 .finally(() => console.log(`A database operation was attempted`));
         });
         return this.state;
+    };
+
+    async get_score_history() {
+        const db_handle = await this.quiz_scores_db_handle_ready
+        // this.quiz_scores_db_handle_ready.then((db_handle) => {
+        const tx = db_handle.transaction("quiz_scores_store", "readonly");
+        let cursor = await tx.store.index(QUIZ_SCORE_DB_INDICES[0]).openCursor(null, "prev");
+
+        while (cursor) {
+            console.log(`found ${Object.values(cursor.value)} with key ${cursor.primaryKey}`);
+            let key = cursor.primaryKey as unknown as number;
+            let quiz_score = cursor.value as unknown as Quiz_score;
+            this.state.score_history?.set(key, quiz_score);
+            cursor = await cursor.continue();
+        }
+        await Promise.all([tx.done]);
+        console.log('from Quiz_score_history_list, recieved tx.done signal');
+        return this.state;
+        // });
     };
 
 };
