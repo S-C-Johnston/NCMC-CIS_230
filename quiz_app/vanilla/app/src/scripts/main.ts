@@ -13,6 +13,7 @@ export default class main {
         //from which it is called.
         this._view = new View(this._model.state, this.update_callback);
         this._view.render();
+        this.update_score_history_list();
     };
 
     update_callback(e: Event) {
@@ -36,6 +37,16 @@ export default class main {
             };
         };
     };
+
+    update_score_history_list() {
+        this._model.get_score_history().then(newstate => {
+            const new_score_history_list = this._view.build_score_history_list(newstate.score_history);
+            const score_history_list_id = new_score_history_list.firstElementChild!.id;
+            const existing_score_history_list = document.querySelector(`#${score_history_list_id}`);
+            existing_score_history_list?.replaceWith(new_score_history_list);
+        });
+    };
+
 };
 
 new main();
