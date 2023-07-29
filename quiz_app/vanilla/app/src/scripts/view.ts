@@ -77,10 +77,12 @@ export default class View {
         const name = section.appendChild(document.createElement("h1"));
         name.textContent = state.quiz.name;
         name.id = HEADING_NAME_ID;
+        name.className = "App";
 
         const topic = section.appendChild(document.createElement("h2"));
         topic.textContent = state.quiz.topic;
         topic.id = HEADING_TOPIC_ID;
+        topic.className = "App";
 
         child_fragments?.forEach(elem => fragment.appendChild(elem));
 
