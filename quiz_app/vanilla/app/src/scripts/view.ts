@@ -113,6 +113,20 @@ export default class View {
             }));
         });
 
+        const button = document.createElement("button");
+        button.type = "button";
+        button.textContent = "SCORE!";
+        button.onclick = e => this.update_callback(e);
+        button.className += "Score-button";
+        button.disabled = state.is_scored ?? false;
+
+        form.appendChild(button);
+
+        const score = document.createElement("h3");
+        score.className = "App";
+        score.textContent = `Score: ${state.score?.percentage_correct ?? "?"}`;
+        form.appendChild(score);
+
         return fragment;
     };
 

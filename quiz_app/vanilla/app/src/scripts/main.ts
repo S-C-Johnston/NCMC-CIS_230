@@ -35,6 +35,19 @@ export default class main {
                 };
                 break;
             };
+            case "click": {
+                const input = e.target as HTMLButtonElement;
+                console.log(`Received event ${e} of type ${e.type}`);
+                console.log(input);
+                let newstate = this._model.score_quiz();
+                let form_fragment = this._view.build_form(newstate);
+                input.closest(`#${form_fragment.firstElementChild?.id}`)?.replaceWith(form_fragment);
+                this.update_score_history_list();
+                break;
+            };
+            default: {
+                throw new Error(`Unhandled event passed to update_callback of type ${e.type}!`);
+            };
         };
     };
 
