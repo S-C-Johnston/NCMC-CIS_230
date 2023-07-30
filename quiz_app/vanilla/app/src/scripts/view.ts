@@ -34,6 +34,7 @@ export default class View {
     };
 
     render(state = this.state, root = this.root) {
+        this.add_style(document.head);
         console.log("Building a new element tree!");
         root.replaceChildren(
             this.build_form_section(
@@ -43,7 +44,6 @@ export default class View {
                     this.build_score_history_list(state.score_history)
                 ])
         );
-        this.add_style(root);
     };
 
     curry_fragment_builder_with_id(
