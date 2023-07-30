@@ -6,8 +6,9 @@ import generate_css_safe_id from "./util/generate_css_safe_id.js";
 const HEADING_NAME_ID = "quiz_name"
 const HEADING_TOPIC_ID = "quiz_topic"
 const STYLESHEETS = [
-    "./quiz/Quiz_Question_Form.css",
-    "./App.css"
+    "../styles/quiz/Quiz_Question_Form.css",
+    "../styles/App.css",
+    "../styles/index.css"
 ];
 const CORRECT_ANSWER_HILIGHT_COLOR = "lightgreen"
 
