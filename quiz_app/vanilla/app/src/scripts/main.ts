@@ -14,6 +14,9 @@ export default class main {
         this._view = new View(this._model.state, this.update_callback);
         this._view.render();
         this.update_score_history_list();
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("/sw.js")
+        }
     };
 
     update_callback(e: Event) {
